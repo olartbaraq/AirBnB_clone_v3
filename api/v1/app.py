@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ import necesaary modules for variable app.py"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 from api.v1.views import app_views
@@ -15,6 +15,12 @@ app.url_map.strict_slaches = False
 def call_storage(self):
     """method to call storage.close()"""
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    """return error page in json"""
+    return jsonify(error="Not found")
 
 
 if __name__ == "__main__":
