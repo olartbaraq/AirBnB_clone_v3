@@ -30,7 +30,7 @@ def to_retrieve_id(state_id):
             return value.to_dict()
         if state_id not in states_id:
             abort(404)
-            
+
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
