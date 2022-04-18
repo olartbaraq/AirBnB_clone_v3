@@ -23,14 +23,14 @@ def to_retrieve():
                  strict_slashes=False)
 def to_retrieve_id(state_id):
     '''retrieves a State object id'''
-    try:
-        objects = storage.all(State)['State.{}'.format(state_id)]
-    except(KeyError):
-        abort(404)
-    if not objects:
-        abort(404)
-    return jsonify(objects.to_dict()), 'OK'
-
+    states_id = []
+    for value in storage.all(State).values():
+        states_id.append(value.id)
+        if (state_id == value.id):
+            return value.to_dict()
+        if state_id not in states_id:
+            abort(404)
+            
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
