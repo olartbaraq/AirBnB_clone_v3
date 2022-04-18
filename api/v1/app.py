@@ -1,18 +1,20 @@
 #!/usr/bin/python3
 """ import necesaary modules for variable app.py"""
 from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
 from os import getenv
 from api.v1.views import app_views
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 app.url_map.strict_slaches = False
 
 
 @app.teardown_appcontext
-def call_storage(self):
+def call_storage(exception=None):
     """method to call storage.close()"""
     storage.close()
 
