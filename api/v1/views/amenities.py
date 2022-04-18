@@ -32,7 +32,7 @@ def amenity_id(amenity_id):
                 aux = {}
                 dic[elem].delete()
                 storage.save()
-                return (jsonify(aux))
+                return (jsonify(aux)), 200
     abort(404)
 
 
@@ -66,5 +66,5 @@ def update_amenity(amenity_id):
                     if k not in forbidden:
                         setattr(dic[key], k, content[k])
                 dic[key].save()
-                return(jsonify(dic[key].to_dict()))
+                return(jsonify(dic[key].to_dict())), 200
     abort(404)
