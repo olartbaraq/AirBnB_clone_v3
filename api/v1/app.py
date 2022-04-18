@@ -14,7 +14,7 @@ app.url_map.strict_slaches = False
 
 
 @app.teardown_appcontext
-def call_storage(exception=None):
+def call_storage(self):
     """method to call storage.close()"""
     storage.close()
 
