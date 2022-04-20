@@ -34,6 +34,7 @@ def delete_state(state_id):
     """return the response status in form of json structure"""
     objects = storage.all('State')
     lista = []
+    State = None
     for state in objects.values():
         lista.append(state)
     for state in lista:
@@ -66,12 +67,13 @@ def updates_states(state_id):
     """updates a states object with put request"""
     objects = storage.all('State')
     lista = []
+    State = None
     for state in objects.values():
         lista.append(state.to_dict())
     for state in lista:
         if state['id'] == state_id:
             State = state
-    if len(State) == 0:
+    if not State:
         abort(404)
         json.dumps(response)
     response = request.get_json()
