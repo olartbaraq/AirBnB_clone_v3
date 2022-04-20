@@ -35,12 +35,14 @@ def delete_state(state_id):
     objects = storage.all('State')
     lista = []
     for state in objects.values():
-        lista.append(state.to_dict())
-    State = [state for state in lista if state['id'] == state_id]
-    if len(State) == 0:
+        lista.append(state)
+    for state in lista:
+        if state.id == state_id:
+            State = state
+    if not State:
         abort(404)
     storage.delete(State)
-    storage.save
+    storage.save()
     return jsonify({}), '200'
 
 @app_views.route('/states', methods=['POST'],
