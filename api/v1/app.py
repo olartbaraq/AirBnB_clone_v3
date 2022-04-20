@@ -24,6 +24,10 @@ def page_not_found(error):
     """return error page in json"""
     return jsonify(error="Not found"), '404'
 
+@app.errorhandler(400)
+def no_json(error):
+    """return error page in json"""
+    return jsonify(error="Not a JSON"), '400'
 
 if __name__ == "__main__":
     host = getenv('HBNB_API_HOST')
@@ -32,4 +36,4 @@ if __name__ == "__main__":
         host = '0.0.0.0'
     if not port:
         port = '5000'
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port, threaded=True, debug=True)
