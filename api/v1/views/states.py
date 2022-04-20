@@ -27,7 +27,7 @@ def get_state(state_id):
     State = [state for state in lista if state['id'] == state_id]
     if len(State) == 0:
         abort(404)
-    return jsonify(State[0]), 'OK'
+    return jsonify(State[0]), '200'
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
@@ -39,7 +39,7 @@ def delete_state(state_id):
     State = [state for state in lista if state['id'] == state_id]
     if len(State) == 0:
         abort(404)
-    storge.delete(State)
+    storage.delete(State)
     storage.save
     return jsonify({}), '200'
 
@@ -66,7 +66,9 @@ def updates_states(state_id):
     lista = []
     for state in objects.values():
         lista.append(state.to_dict())
-    State = [state for state in lista if state['id'] == state_id]
+    for state in lista:
+        if state['id'] == state_id:
+            State = state
     if len(State) == 0:
         abort(404)
         json.dumps(response)
@@ -76,6 +78,6 @@ def updates_states(state_id):
     ignoreKeys = ['id', 'created_at', 'updated_at']
     for key, value in response.items():
         if key not in ignoreKeys:
-            setattr(stateObject, key, value)
+            State[key] = value
     storage.save()
-    return jsonify(stateObject.to_dict()), '200'
+    return jsonify(State), '200'
